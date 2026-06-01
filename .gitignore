@@ -1,7 +1,27 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
+
+# Angular cache
 .angular/
+
+# Environment files (contains API keys)
 src/environments/environment.ts
 src/environments/environment.prod.ts
-*.env
 
+# VS Code history plugin
+.history/
+
+# IDE folders
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
