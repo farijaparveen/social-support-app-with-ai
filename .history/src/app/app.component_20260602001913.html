@@ -1,0 +1,77 @@
+<div class="app-shell">
+  <app-header></app-header>
+
+  @if (!fs.submitted()) {
+  <app-progress-bar></app-progress-bar>
+  }
+
+  <main class="main-content" role="main" id="main-content">
+    <div class="form-card">
+      @if (!fs.submitted()) {
+      <!-- Save indicator -->
+      <div class="save-indicator" aria-live="polite" role="status">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M1 6l4 4 6-6"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        {{ t.t("SAVE_INDICATOR") }}
+      </div>
+
+      @switch (fs.currentStep()) { @case (1) {
+      <app-step1-personal></app-step1-personal> } @case (2) {
+      <app-step2-family></app-step2-family> } @case (3) {
+      <app-step3-situation></app-step3-situation> } } } @if (fs.submitted()) {
+      <div class="success-screen fade-in-up">
+        <div class="success-icon" aria-hidden="true">
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="24" cy="24" r="22" fill="#e8f5e9" />
+            <circle
+              cx="24"
+              cy="24"
+              r="22"
+              stroke="#2e7d32"
+              stroke-width="1.5"
+            />
+            <path
+              d="M14 24l8 8 14-14"
+              stroke="#2e7d32"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <h2 class="success-title">{{ t.t("SUBMIT_SUCCESS_TITLE") }}</h2>
+        <p class="success-msg">
+          {{ t.t("SUBMIT_SUCCESS_MSG", { ref: fs.referenceNumber() }) }}
+        </p>
+        <p class="success-note">{{ t.t("SUBMIT_SUCCESS_NOTE") }}</p>
+        <div class="ref-box">
+          <span class="ref-label">Reference</span>
+          <span class="ref-number">{{ fs.referenceNumber() }}</span>
+        </div>
+        <button class="btn btn-primary" (click)="fs.resetApplication()">
+          {{ t.t("BTN_NEW_APPLICATION") }}
+        </button>
+      </div>
+      }
+    </div>
+  </main>
+</div>

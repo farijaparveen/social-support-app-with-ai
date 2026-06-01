@@ -1,0 +1,208 @@
+<section class="step-section fade-in-up" aria-labelledby="step3-heading">
+  <div class="step-header">
+    <div class="step-icon" aria-hidden="true">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M14 2v6h6M16 13H8M16 17H8M10 9H8"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+      </svg>
+    </div>
+    <div>
+      <h2 id="step3-heading" class="step-title">{{ t.t("STEP3_TITLE") }}</h2>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="ai-field-group">
+      <div class="field-header">
+        <label class="form-label" for="financialSituation"
+          >{{ t.t("FIELD_FINANCIAL_SITUATION") }} *</label
+        >
+        <button
+          type="button"
+          class="btn btn-accent btn-sm ai-btn"
+          (click)="openAiModal('financial')"
+          [attr.aria-label]="
+            t.t('BTN_HELP_WRITE') + ' - ' + t.t('FIELD_FINANCIAL_SITUATION')
+          "
+        >
+          {{ t.t("BTN_HELP_WRITE") }}
+        </button>
+      </div>
+      <p class="field-hint">{{ t.t("AI_FIELD_HINT") }}</p>
+      <textarea
+        id="financialSituation"
+        class="form-control"
+        formControlName="financialSituation"
+        [placeholder]="t.t('PLACEHOLDER_TEXTAREA')"
+        rows="5"
+        aria-required="true"
+        [attr.aria-invalid]="hasError('financialSituation')"
+      >
+      </textarea>
+      @if (hasError('financialSituation', 'required')) {
+      <span class="error-msg" role="alert"
+        >⚠ {{ t.t("VALIDATION_REQUIRED") }}</span
+      >
+      } @if (hasError('financialSituation', 'minlength')) {
+      <span class="error-msg" role="alert"
+        >⚠ {{ t.t("VALIDATION_MIN_LENGTH", { min: 30 }) }}</span
+      >
+      }
+    </div>
+
+    <div class="ai-field-group">
+      <div class="field-header">
+        <label class="form-label" for="employmentCircumstances"
+          >{{ t.t("FIELD_EMPLOYMENT_CIRCUMSTANCES") }} *</label
+        >
+        <button
+          type="button"
+          class="btn btn-accent btn-sm ai-btn"
+          (click)="openAiModal('employment')"
+          [attr.aria-label]="
+            t.t('BTN_HELP_WRITE') +
+            ' - ' +
+            t.t('FIELD_EMPLOYMENT_CIRCUMSTANCES')
+          "
+        >
+          {{ t.t("BTN_HELP_WRITE") }}
+        </button>
+      </div>
+      <p class="field-hint">{{ t.t("AI_FIELD_HINT") }}</p>
+      <textarea
+        id="employmentCircumstances"
+        class="form-control"
+        formControlName="employmentCircumstances"
+        [placeholder]="t.t('PLACEHOLDER_TEXTAREA')"
+        rows="5"
+        aria-required="true"
+        [attr.aria-invalid]="hasError('employmentCircumstances')"
+      >
+      </textarea>
+      @if (hasError('employmentCircumstances', 'required')) {
+      <span class="error-msg" role="alert"
+        >⚠ {{ t.t("VALIDATION_REQUIRED") }}</span
+      >
+      } @if (hasError('employmentCircumstances', 'minlength')) {
+      <span class="error-msg" role="alert"
+        >⚠ {{ t.t("VALIDATION_MIN_LENGTH", { min: 30 }) }}</span
+      >
+      }
+    </div>
+
+    <div class="ai-field-group">
+      <div class="field-header">
+        <label class="form-label" for="reasonForApplying"
+          >{{ t.t("FIELD_REASON_APPLYING") }} *</label
+        >
+        <button
+          type="button"
+          class="btn btn-accent btn-sm ai-btn"
+          (click)="openAiModal('reason')"
+          [attr.aria-label]="
+            t.t('BTN_HELP_WRITE') + ' - ' + t.t('FIELD_REASON_APPLYING')
+          "
+        >
+          {{ t.t("BTN_HELP_WRITE") }}
+        </button>
+      </div>
+      <p class="field-hint">{{ t.t("AI_FIELD_HINT") }}</p>
+      <textarea
+        id="reasonForApplying"
+        class="form-control"
+        formControlName="reasonForApplying"
+        [placeholder]="t.t('PLACEHOLDER_TEXTAREA')"
+        rows="5"
+        aria-required="true"
+        [attr.aria-invalid]="hasError('reasonForApplying')"
+      >
+      </textarea>
+      @if (hasError('reasonForApplying', 'required')) {
+      <span class="error-msg" role="alert"
+        >⚠ {{ t.t("VALIDATION_REQUIRED") }}</span
+      >
+      } @if (hasError('reasonForApplying', 'minlength')) {
+      <span class="error-msg" role="alert"
+        >⚠ {{ t.t("VALIDATION_MIN_LENGTH", { min: 30 }) }}</span
+      >
+      }
+    </div>
+
+    <div class="step-actions">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onBack()"
+        [disabled]="fs.submitting()"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden="true"
+          [style.transform]="t.isRtl() ? 'scaleX(-1)' : 'none'"
+        >
+          <path
+            d="M13 8H3M7 12L3 8l4-4"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        {{ t.t("BTN_BACK") }}
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="fs.submitting()"
+      >
+        @if (fs.submitting()) {
+        <span class="loading-spinner" aria-hidden="true"></span>
+        {{ t.t("BTN_SUBMITTING") }}
+        } @else {
+        {{ t.t("BTN_SUBMIT") }}
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M2 8l10-6-3 6 3 6z" fill="currentColor" opacity="0.8" />
+        </svg>
+        }
+      </button>
+    </div>
+  </form>
+</section>
+
+@if (showModal()) {
+<app-ai-suggestion-modal
+  [state]="modalState()"
+  [suggestion]="aiSuggestion()"
+  [errorMessage]="aiError()"
+  (accepted)="onAccepted($event)"
+  (discarded)="onDiscarded()"
+  (retried)="onRetried()"
+>
+</app-ai-suggestion-modal>
+}

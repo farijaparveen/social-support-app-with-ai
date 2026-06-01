@@ -1,0 +1,98 @@
+<div class="modal-overlay" role="dialog" aria-modal="true"
+  [attr.aria-label]="t.t('AI_MODAL_TITLE')"
+  (click)="onOverlayClick($event)" (keydown)="onKeyDown($event)" tabindex="-1">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title-row">
+        <div class="ai-badge" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1L9.5 6H15L10.5 9.5L12 14.5L8 11L4 14.5L5.5 9.5L1 6H6.5L8 1Z" fill="currentColor"/>
+          </svg>
+          AI
+        </div>
+        <h3 class="modal-title">{{ t.t('AI_MODAL_TITLE') }}</h3>
+      </div>
+      <button class="modal-close" (click)="discard()" [attr.aria-label]="t.t('BTN_DISCARD')">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      @if (state === 'loading') {
+        <div class="loading-state" role="status" aria-live="polite">
+          <div class="ai-loader">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+          </div>
+          <p class="loading-text">{{ t.t('AI_GENERATING') }}</p>
+        </div>
+      }
+
+      @if (state === 'error') {
+        <div class="error-state" role="alert">
+          <div class="error-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M16 10v8M16 22v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h4>{{ t.t('AI_ERROR_TITLE') }}</h4>
+          <p>{{ errorMessage || t.t('AI_ERROR_MSG') }}</p>
+        </div>
+      }
+
+      @if (state === 'success' && !isEditing()) {
+        <div>
+          <p class="modal-subtitle">{{ t.t('AI_MODAL_SUBTITLE') }}</p>
+          <div class="suggestion-box" role="region" aria-label="AI suggestion">
+            {{ suggestion }}
+          </div>
+        </div>
+      }
+
+      @if (isEditing()) {
+        <div>
+          <p class="modal-subtitle">{{ t.t('AI_MODAL_SUBTITLE') }}</p>
+          <textarea class="suggestion-edit form-control" [value]="editedText()"
+            (input)="editedText.set($any($event.target).value)"
+            rows="6" [attr.aria-label]="t.t('AI_MODAL_TITLE')">
+          </textarea>
+        </div>
+      }
+    </div>
+
+    <div class="modal-footer">
+      @if (state === 'error') {
+        <button class="btn btn-secondary btn-sm" (click)="retry()">
+          {{ t.t('BTN_RETRY') }}
+        </button>
+        <button class="btn btn-ghost btn-sm" (click)="discard()">
+          {{ t.t('BTN_DISCARD') }}
+        </button>
+      }
+
+      @if (state === 'success' || isEditing()) {
+        <button class="btn btn-ghost btn-sm" (click)="discard()">
+          {{ t.t('BTN_DISCARD') }}
+        </button>
+        @if (!isEditing()) {
+          <button class="btn btn-secondary btn-sm" (click)="startEditing()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M9.5 2L12 4.5l-7 7H2.5V9L9.5 2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {{ t.t('BTN_EDIT') }}
+          </button>
+        }
+        <button class="btn btn-accent btn-sm" (click)="acceptSuggestion()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7l4 4 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          {{ t.t('BTN_ACCEPT') }}
+        </button>
+      }
+    </div>
+  </div>
+</div>

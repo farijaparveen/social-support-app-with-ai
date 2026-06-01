@@ -1,0 +1,57 @@
+<div class="progress-wrapper" role="navigation" aria-label="Form steps">
+  <div class="steps-row">
+    @for (step of steps; track step.num) {
+    <div
+      class="step-item"
+      [class.active]="fs.currentStep() === step.num"
+      [class.done]="fs.currentStep() > step.num"
+    >
+      <div
+        class="step-circle"
+        [attr.aria-current]="fs.currentStep() === step.num ? 'step' : null"
+      >
+        @if (fs.currentStep() > step.num) {
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M2 7l4 4 6-6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        } @else {
+        {{ step.num }}
+        }
+      </div>
+      <span class="step-label">{{ t.t(step.labelKey) }}</span>
+    </div>
+    @if (step.num < 3) {
+    <div
+      class="step-connector"
+      [class.done]="fs.currentStep() > step.num"
+    ></div>
+    } }
+  </div>
+  <div class="progress-text">
+    {{ t.t("PROGRESS_STEP", { current: fs.currentStep(), total: 3 }) }}
+  </div>
+  <div
+    class="progress-bar-track"
+    role="progressbar"
+    [attr.aria-valuenow]="fs.currentStep()"
+    aria-valuemin="1"
+    aria-valuemax="3"
+  >
+    <div
+      class="progress-bar-fill"
+      [style.width.%]="(fs.currentStep() / 3) * 100"
+    ></div>
+  </div>
+</div>
